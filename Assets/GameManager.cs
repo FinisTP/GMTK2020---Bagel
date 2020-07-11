@@ -247,7 +247,7 @@ public class GameManager : MonoBehaviour
         
         timer();
         deckNumber.text = currentDeckSize.ToString() + "/" + maxDeckSize.ToString();
-        if (currentDeckSize == 0 && !checkHand()) mainChar.gameOver();
+        if (currentDeckSize == 0 && !checkHand()) mainChar.isGameOver = true;
 
         if (Input.GetKeyDown(KeyCode.Z))
         {

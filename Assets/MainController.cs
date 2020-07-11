@@ -34,7 +34,9 @@ public class MainController : MonoBehaviour
     public bool isAttacking;
     public bool isRecovering;
     public bool isProtecting;
+    public bool isGameOver;
 
+    
     bool facingRight = true;
     float timePassed = 0;
     float moveDirection = 0;
@@ -75,6 +77,7 @@ public class MainController : MonoBehaviour
         move();
         attack();
         jump();
+        gameOver();
         if (mainCamera)
             mainCamera.transform.position = new Vector3(t.position.x + cameraOffset, t.position.y, cameraPos.z);
         healthBar.fillAmount = currHealth / maxHealth;
@@ -180,7 +183,7 @@ public class MainController : MonoBehaviour
         {
             currHealth -= dmg;
             if (currHealth >= maxHealth) currHealth = maxHealth;
-            if (currHealth <= 0) gameOver();
+            if (currHealth <= 0) isGameOver = true;
         }
         {
             currHealth -= dmg;
@@ -191,7 +194,9 @@ public class MainController : MonoBehaviour
 
     public void gameOver()
     {
-        Time.timeScale = 0;
+        if (isGameOver)
+        GameObject.Find("SceneChanger").GetComponent<SceneChanger>().LoadScene("GameOver");
+        //Time.timeScale = 0;
     }
 
     void FixedUpdate()

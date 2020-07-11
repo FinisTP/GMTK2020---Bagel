@@ -1,0 +1,362 @@
+fileFormatVersion: 2
+guid: 1a6bcd619f6a4994fb3803165b3021b8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8316878683918750512
+    second: Main_jump_left_0
+  - first:
+      213: 1449154863904819659
+    second: Main_jump_left_1
+  - first:
+      213: -2929710853526772783
+    second: Main_jump_left_2
+  - first:
+      213: -4841290544743755194
+    second: Main_jump_left_3
+  - first:
+      213: -8580934783707794475
+    second: Main_jump_left_4
+  - first:
+      213: -2514390328014907016
+    second: Main_jump_left_5
+  - first:
+      213: -767577813442120536
+    second: Main_jump_left_6
+  - first:
+      213: -6771783202851991685
+    second: Main_jump_left_7
+  - first:
+      213: -2563875856183960472
+    second: Main_jump_left_8
+  - first:
+      213: -8350434798187805836
+    second: Main_jump_left_9
+  - first:
+      213: 2274532273154401210
+    second: Main_jump_left_10
+  - first:
+      213: -7762577180822722527
+    second: Main_jump_left_11
+  - first:
+      213: -4436113338564294000
+    second: Main_jump_left_12
+  - first:
+      213: -2649176712800853295
+    second: Main_jump_left_13
+  - first:
+      213: -228184291844875475
+    second: Main_jump_left_14
+  - first:
+      213: -5485013710812076384
+    second: Main_jump_left_15
+  - first:
+      213: -3331009107426289715
+    second: Main_jump_left_16
+  - first:
+      213: -3108972505587309695
+    second: Main_jump_left_17
+  - first:
+      213: 998185646467680318
+    second: Main_jump_left_18
+  - first:
+      213: -9048325120222072681
+    second: Main_jump_left_19
+  - first:
+      213: 3137041462679617563
+    second: Main_jump_left_20
+  - first:
+      213: -7123771518268037247
+    second: Main_jump_left_21
+  - first:
+      213: 6108948430597760996
+    second: Main_jump_left_22
+  - first:
+      213: -7740727302384066461
+    second: Main_jump_left_23
+  - first:
+      213: 6918072178537320770
+    second: Main_jump_left_24
+  - first:
+      213: 4374517446484974287
+    second: Main_jump_left_25
+  - first:
+      213: 5796005858369814981
+    second: Main_jump_left_26
+  - first:
+      213: 8319550953803328995
+    second: Main_jump_left_27
+  - first:
+      213: -3370166903776222601
+    second: Main_jump_left_28
+  - first:
+      213: 771873897046929720
+    second: Main_jump_left_29
+  - first:
+      213: -4888936639713985223
+    second: Main_jump_left_30
+  - first:
+      213: -8114836063620140738
+    second: Main_jump_left_31
+  - first:
+      213: 837196754591752153
+    second: Main_jump_left_32
+  - first:
+      213: 1172669988428684152
+    second: Main_jump_left_33
+  - first:
+      213: 1000142435201101510
+    second: Main_jump_left_34
+  - first:
+      213: 1442433137412079413
+    second: Main_jump_left_35
+  - first:
+      213: 2356384039064143211
+    second: Main_jump_left_36
+  - first:
+      213: 4877685021603928196
+    second: Main_jump_left_37
+  - first:
+      213: 7949373708950163184
+    second: Main_jump_left_38
+  - first:
+      213: -4606954814432084290
+    second: Main_jump_left_39
+  - first:
+      213: -9128927575108628472
+    second: Main_jump_left_40
+  - first:
+      213: -276086632426864403
+    second: Main_jump_left_41
+  - first:
+      213: -1656922955143541111
+    second: Main_jump_left_42
+  - first:
+      213: -8707604845708150216
+    second: Main_jump_left_43
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Main_jump_left_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dc2105d6e2849c80800000000000000
+      internalID: -8316878683918750512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_jump_left_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc98397bbae6c1410800000000000000
+      internalID: 1449154863904819659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_jump_left_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d32ee040839757d0800000000000000
+      internalID: -2929710853526772783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_jump_left_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 642571a56e740dcb0800000000000000
+      internalID: -4841290544743755194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_jump_left_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d3bd4827456ae880800000000000000
+      internalID: -8580934783707794475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_jump_left_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8795ef781571b1dd0800000000000000
+      internalID: -2514390328014907016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: f53404d60bce1f54d9fccc6fb9b9e7b4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
