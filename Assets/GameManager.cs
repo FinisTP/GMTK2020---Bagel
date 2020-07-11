@@ -88,23 +88,23 @@ public class GameManager : MonoBehaviour
         }
         shuffleDeck();
         for (int i = 0; i < maxHandSize; ++i) drawNewCard(i);
-        Debug.Log("card");
+        
     }
 
     public void drawNewCard(int slot)
     {
         if (availability[slot] || currentDeckSize <= 0) return;
-        Cards card = deck[currentDeckSize-1];
+        Cards card = deck[currentDeckSize - 1];
+        deck.Remove(deck[currentDeckSize - 1]);
         hand[slot] = card;
         currentDeckSize--;
         //Debug.Log(currentDeckSize);
         Image img = GameObject.Find("card" + (slot+1).ToString()).GetComponent<Image>();
         img.sprite = card.artwork;
-        Debug.Log("drew " + card.name);
         //img.GetComponent<Button_UI>().hoverBehaviour_Image = card.artwork;
         img.GetComponent<Button_UI>().MouseOverOnceTooltipFunc = () => Tooltip.ShowTooltip_Static(card.name + ": " + card.description);
         img.GetComponent<Button_UI>().MouseOutOnceTooltipFunc = () => Tooltip.HideTooltip_Static();
-        
+        LogSystem.SendMessageToChat_Static("Drew '" + card.name + "'.");
         availability[slot] = true;
         activity[slot] = false;
     }
@@ -137,6 +137,7 @@ public class GameManager : MonoBehaviour
                 default:
                     break;
             }
+            LogSystem.SendMessageToChat_Static("Used '" + hand[slot].name + "' - activated " + hand[slot].chatLog + ".");
             activity[slot] = true;
         }
         else if (activeTime[slot] <= hand[slot].duration)
@@ -168,9 +169,11 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-        
+
+        LogSystem.SendMessageToChat_Static("Negated '" + hand[slot].name + "' - stopped" + hand[slot].chatLog + ".");
+
         activity[slot] = false;
-        Debug.Log("Deactivated a card");
+        //Debug.Log("Deactivated a card");
     }
 
     public void removeCardFromHand(int slot)
@@ -186,8 +189,8 @@ public class GameManager : MonoBehaviour
         
         availability[slot] = false;
         activeTime[slot] = 0;
+        LogSystem.SendMessageToChat_Static("'" + hand[slot].name + "' is out of control.");
         if (currentDeckSize > 0) drawNewCard(slot);
-        Debug.Log("Removed a card");
     }
 
     public void shuffleDeck()
@@ -206,11 +209,22 @@ public class GameManager : MonoBehaviour
         }
         deck.Clear();
         deck = new List<Cards>(newList);
+        LogSystem.SendMessageToChat_Static("The deck has been shuffled.");
     }
 
     public void addToDeck(Cards other)
     {
-        deck[currentDeckSize++] = other;
+        deck.Add(other);
+        LogSystem.SendMessageToChat_Static("'" + other.name + "' has been added to the deck.");
+    }
+
+    public bool checkHand()
+    {
+        for (int i = 0; i < maxHandSize; ++i)
+        {
+            if (availability[i]) return true;
+        }
+        return false;
     }
 
     public void timer()
@@ -233,7 +247,7 @@ public class GameManager : MonoBehaviour
         
         timer();
         deckNumber.text = currentDeckSize.ToString() + "/" + maxDeckSize.ToString();
-        if (currentDeckSize == 0) mainChar.gameOver();
+        if (currentDeckSize == 0 && !checkHand()) mainChar.gameOver();
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -247,17 +261,13 @@ public class GameManager : MonoBehaviour
         {
             useCard(2);
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.V))
         {
             useCard(3);
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.B))
         {
             useCard(4);
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            useCard(5);
         }
     }
 

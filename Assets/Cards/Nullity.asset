@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Buji
   description: An empty card
-  artwork: {fileID: 9008153383594388043, guid: c203b6ea6b4315b45b44e10db349b048, type: 3}
+  chatLog: 
+  artwork: {fileID: -7732569738864306783, guid: ce3a064be3244ec4eb7260b42c6656be,
+    type: 3}
   cardType: 6
   duration: 2
   power: 25

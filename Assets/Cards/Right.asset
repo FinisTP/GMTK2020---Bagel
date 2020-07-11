@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Migi
   description: Slowly moves right for 5 seconds
+  chatLog: advancing right
   artwork: {fileID: 6003203737844755297, guid: c203b6ea6b4315b45b44e10db349b048, type: 3}
   cardType: 0
   duration: 5

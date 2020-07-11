@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Bouei
   description: Protects yourself from attack for 10 seconds
+  chatLog: defensive system
   artwork: {fileID: 882915015491475503, guid: c203b6ea6b4315b45b44e10db349b048, type: 3}
   cardType: 3
   duration: 10

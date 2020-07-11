@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Hidari
   description: Slowly moves left for 5 seconds
+  chatLog: advancing left
   artwork: {fileID: 4445570557637443561, guid: c203b6ea6b4315b45b44e10db349b048, type: 3}
   cardType: 0
   duration: 5

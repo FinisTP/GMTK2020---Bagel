@@ -26,6 +26,7 @@ public class Cards : ScriptableObject
 {
     public string name;
     public string description;
+    public string chatLog;
 
     public Sprite artwork;
     public CardType cardType;
