@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class MainController : MonoBehaviour
 {
+    public Image healthBar;
+
     // Move player in 2D space
     public float maxSpeed = 3.4f;
     public float jumpHeight = 6.5f;
@@ -15,14 +18,21 @@ public class MainController : MonoBehaviour
     public float dashSpeed = 2f;
     public Camera mainCamera;
     public GameObject bullet;
-    public float shootSpeed;
-    public float shootDelay;
+    public float attackSpeed;
+    public float attackDelay;
+    public float protectPower;
+    public float maxHealth;
+
+    public Collider2D attackTriggerLeft;
+    public Collider2D attackTriggerRight;
+    public Collider2D attackTriggerUp;
+    public Collider2D attackTriggerDown;
 
     public bool isJumping;
     public bool isMovingLeft;
     public bool isMovingRight;
-    public bool isShooting;
-    public bool isGliding;
+    public bool isAttacking;
+    public bool isRecovering;
     public bool isProtecting;
 
     bool facingRight = true;
@@ -30,12 +40,16 @@ public class MainController : MonoBehaviour
     float moveDirection = 0;
     bool isGrounded = false;
     float ampSpeed;
+    float currHealth;
+    float attackPower;
     Vector3 cameraPos;
     Rigidbody2D r2d;
     Collider2D mainCollider;
+    Collider2D attackCollider;
     // Check every collider except Player and Ignore Raycast
     LayerMask layerMask = ~(1 << 2 | 1 << 8);
     Transform t;
+
 
     // Use this for initialization
     void Start()
@@ -49,6 +63,7 @@ public class MainController : MonoBehaviour
         r2d.gravityScale = gravityScale;
         facingRight = t.localScale.x > 0;
         gameObject.layer = 8;
+        currHealth = maxHealth;
 
         if (mainCamera)
             cameraPos = mainCamera.transform.position;
@@ -57,7 +72,64 @@ public class MainController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Movement controls
+        move();
+        attack();
+        protect();
+        if (mainCamera)
+            mainCamera.transform.position = new Vector3(t.position.x + cameraOffset, t.position.y, cameraPos.z);
+        healthBar.fillAmount = currHealth / maxHealth;
+    }
+
+    public void triggerMove(Direction direction, float power)
+    {
+        if (direction == Direction.right) isMovingRight = true;
+        else if (direction == Direction.left) isMovingLeft = true;
+        maxSpeed = Mathf.Abs(power);
+    }
+
+    public void triggerJump(int power)
+    {
+        isJumping = true;
+        jumpHeight = power;
+    }
+
+    public void triggerProtect(float power)
+    {
+        protectPower = power;
+        isProtecting = true;
+    }
+
+    public void triggerAttack(Direction dir, float power)
+    {
+        switch (dir)
+        {
+            case Direction.right:
+                attackCollider = attackTriggerRight;
+                break;
+            case Direction.left:
+                attackCollider = attackTriggerLeft;
+                break;
+            case Direction.up:
+                attackCollider = attackTriggerUp;
+                break;
+            case Direction.down:
+                attackCollider = attackTriggerDown;
+                break;
+            default: break;
+        }
+        isAttacking = true;
+        attackPower = power;
+    }
+
+    public void protect()
+    {
+        if (isProtecting)
+        {
+
+        }
+    }
+    public void move()
+    {
         if (isMovingLeft || isMovingRight)
         {
             moveDirection = isMovingLeft ? -1 : 1;
@@ -84,37 +156,46 @@ public class MainController : MonoBehaviour
                 t.localScale = new Vector3(-Mathf.Abs(t.localScale.x), t.localScale.y, t.localScale.z);
             }
         }
+    }
 
-        // Jumping
+    public void defend()
+    {
+
+    }
+
+    public void jump()
+    {
         if (isJumping && isGrounded)
         {
             r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
         }
-
-        //Gliding
-        if (isGliding && isGrounded)
-        {
-            ampSpeed = dashSpeed;
-            r2d.gravityScale = 0;
-        }
-        else if (!isGliding)
-        {
-            ampSpeed = 1;
-            r2d.gravityScale = 1;
-        }
-
-        if (isShooting && timePassed >= shootDelay)
-        {
-            GameObject b = Instantiate(bullet, t.position, t.rotation);
-            b.transform.Translate(Vector2.right * moveDirection * shootSpeed);
-            timePassed = 0;
-        }
-        timePassed += Time.deltaTime;
-        // Camera follow
-        if (mainCamera)
-            mainCamera.transform.position = new Vector3(t.position.x + cameraOffset, t.position.y, cameraPos.z);
     }
 
+    public void attack()
+    {
+        if (isAttacking && timePassed >= attackDelay)
+        {
+            attackCollider.enabled = true;
+            timePassed = 0;
+        }
+        else
+        {
+            attackCollider.enabled = false;
+        }
+        timePassed += Time.deltaTime;
+    }
+
+    public void takeDamage(float dmg)
+    {
+        currHealth -= dmg;
+        if (currHealth >= maxHealth) currHealth = maxHealth;
+        if (currHealth <= 0) gameOver();
+    }
+
+    public void gameOver()
+    {
+        Time.timeScale = 0;
+    }
 
     void FixedUpdate()
     {
