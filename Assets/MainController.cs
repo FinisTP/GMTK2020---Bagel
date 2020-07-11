@@ -12,11 +12,24 @@ public class MainController : MonoBehaviour
     public float jumpHeight = 6.5f;
     public float gravityScale = 1.5f;
     public float cameraOffset = 2.5f;
+    public float dashSpeed = 2f;
     public Camera mainCamera;
+    public GameObject bullet;
+    public float shootSpeed;
+    public float shootDelay;
+
+    public bool isJumping;
+    public bool isMovingLeft;
+    public bool isMovingRight;
+    public bool isShooting;
+    public bool isGliding;
+    public bool isProtecting;
 
     bool facingRight = true;
+    float timePassed = 0;
     float moveDirection = 0;
     bool isGrounded = false;
+    float ampSpeed;
     Vector3 cameraPos;
     Rigidbody2D r2d;
     Collider2D mainCollider;
@@ -28,6 +41,7 @@ public class MainController : MonoBehaviour
     void Start()
     {
         t = transform;
+        ampSpeed = 1;
         r2d = GetComponent<Rigidbody2D>();
         mainCollider = GetComponent<Collider2D>();
         r2d.freezeRotation = true;
@@ -44,9 +58,9 @@ public class MainController : MonoBehaviour
     void Update()
     {
         // Movement controls
-        if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && (isGrounded || r2d.velocity.x > 0.01f))
+        if (isMovingLeft || isMovingRight)
         {
-            moveDirection = Input.GetKey(KeyCode.A) ? -1 : 1;
+            moveDirection = isMovingLeft ? -1 : 1;
         }
         else
         {
@@ -72,15 +86,35 @@ public class MainController : MonoBehaviour
         }
 
         // Jumping
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+        if (isJumping && isGrounded)
         {
             r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
         }
 
+        //Gliding
+        if (isGliding && isGrounded)
+        {
+            ampSpeed = dashSpeed;
+            r2d.gravityScale = 0;
+        }
+        else if (!isGliding)
+        {
+            ampSpeed = 1;
+            r2d.gravityScale = 1;
+        }
+
+        if (isShooting && timePassed >= shootDelay)
+        {
+            GameObject b = Instantiate(bullet, t.position, t.rotation);
+            b.transform.Translate(Vector2.right * moveDirection * shootSpeed);
+            timePassed = 0;
+        }
+        timePassed += Time.deltaTime;
         // Camera follow
         if (mainCamera)
             mainCamera.transform.position = new Vector3(t.position.x + cameraOffset, t.position.y, cameraPos.z);
     }
+
 
     void FixedUpdate()
     {
@@ -90,7 +124,7 @@ public class MainController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheckPos, 0.23f, layerMask);
 
         // Apply movement velocity
-        r2d.velocity = new Vector2((moveDirection) * maxSpeed, r2d.velocity.y);
+        r2d.velocity = new Vector2((moveDirection) * maxSpeed * ampSpeed, r2d.velocity.y);
 
         // Simple debug
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(0, 0.23f, 0), isGrounded ? Color.green : Color.red);
