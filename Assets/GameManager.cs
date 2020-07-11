@@ -9,8 +9,9 @@ public class GameManager : MonoBehaviour
     //public Text[] guides;
     public MainController mainChar;
     public Image deckImage;
-    public Image placeholder;
+    public Cards placeholder;
     public Text deckNumber;
+    public Transform destination;
 
     public Cards[] kindOfCards;
 
@@ -32,7 +33,10 @@ public class GameManager : MonoBehaviour
         mainChar = GameObject.Find("Player").GetComponent<MainController>();
         deck = new List<Cards>();
         hand = new List<Cards>(maxHandSize);
+        initDeck();
+        Tooltip.HideTooltip_Static();
     }
+
 
     public void initDeck()
     {
@@ -60,7 +64,7 @@ public class GameManager : MonoBehaviour
             deck.Add(movement[randMove]);
             currentDeckSize++;
         }
-        while (deck.Count < maxDeckSize / 3)
+        while (deck.Count < 3 * maxDeckSize / 4 )
         {
             int randJump = Random.Range(0, jump.Count);
             deck.Add(jump[randJump]);
@@ -72,36 +76,43 @@ public class GameManager : MonoBehaviour
             deck.Add(other[randOther]);
             currentDeckSize++;
         }
-        availability = new List<bool>(maxHandSize);
-        activeTime = new List<float>(maxHandSize);
-        activity = new List<bool>(maxHandSize);
+        availability = new List<bool>();
+        activeTime = new List<float>();
+        activity = new List<bool>();
         for (int i = 0; i < maxHandSize; ++i)
         {
-            availability[i] = false;
-            activeTime[i] = 0f;
-            activity[i] = false;
+            availability.Add(false);
+            activeTime.Add(0f);
+            activity.Add(false);
+            hand.Add(placeholder);
         }
+        shuffleDeck();
+        for (int i = 0; i < maxHandSize; ++i) drawNewCard(i);
+        Debug.Log("card");
     }
 
     public void drawNewCard(int slot)
     {
-        if (availability[slot]) return;
-        Cards card = deck[currentDeckSize];
+        if (availability[slot] || currentDeckSize <= 0) return;
+        Cards card = deck[currentDeckSize-1];
         hand[slot] = card;
         currentDeckSize--;
-        Image img = GameObject.Find("card" + slot.ToString()).GetComponent<Image>();
+        //Debug.Log(currentDeckSize);
+        Image img = GameObject.Find("card" + (slot+1).ToString()).GetComponent<Image>();
         img.sprite = card.artwork;
-        img.GetComponent<Button_UI>().MouseOverOnceFunc = () => Tooltip.ShowTooltip_Static(card.name + ": " + card.description);
-        img.GetComponent<Button_UI>().MouseOutOnceFunc = () => Tooltip.HideTooltip_Static();
+        Debug.Log("drew " + card.name);
+        //img.GetComponent<Button_UI>().hoverBehaviour_Image = card.artwork;
+        img.GetComponent<Button_UI>().MouseOverOnceTooltipFunc = () => Tooltip.ShowTooltip_Static(card.name + ": " + card.description);
+        img.GetComponent<Button_UI>().MouseOutOnceTooltipFunc = () => Tooltip.HideTooltip_Static();
+        
         availability[slot] = true;
         activity[slot] = false;
-
     }
 
     public void useCard(int slot)
     {
-        if (!availability[slot]) return null;
-        else if (!activity[slot])
+        if (!availability[slot]) return;
+        else if (!activity[slot] && activeTime[slot] <= hand[slot].duration)
         {
             switch (hand[slot].cardType)
             {
@@ -115,83 +126,138 @@ public class GameManager : MonoBehaviour
                     mainChar.triggerMove(hand[slot].direction, hand[slot].power);
                     break;
                 case CardType.protect:
+                    mainChar.isProtecting = true;
+                    break;
                 case CardType.shuffle:
                     shuffleDeck();
                     break;
                 case CardType.recover:
+                    mainChar.takeDamage(-hand[slot].power);
+                    break;
                 default:
                     break;
             }
-            yield return new WaitForSeconds(hand[slot].duration);
-            switch (hand[slot].cardType)
-            {
-                case CardType.attack:
-                    mainChar.isAttacking = false;
-                    break;
-                case CardType.jump:
-                    mainChar.isJumping = false;
-                    break;
-                case CardType.move:
-                    mainChar.isMovingLeft = mainChar.isMovingRight = false;
-                    break;
-                case CardType.protect:
-                    mainChar.isProtecting = false;
-                    break;
-                case CardType.shuffle:
-                    break;
-                case CardType.recover:
-                default:
-                    break;
-            }
+            activity[slot] = true;
+        }
+        else if (activeTime[slot] <= hand[slot].duration)
+        {
+            deactivateCard(slot);
         }
     }
 
-    public void removeCardFromHand (int slot)
+    public void deactivateCard(int slot)
+    {
+        switch (hand[slot].cardType)
+        {
+            case CardType.attack:
+                mainChar.isAttacking = false;
+                break;
+            case CardType.jump:
+                mainChar.isJumping = false;
+                break;
+            case CardType.move:
+                mainChar.isMovingLeft = mainChar.isMovingRight = false;
+                break;
+            case CardType.protect:
+                mainChar.isProtecting = false;
+                break;
+            case CardType.shuffle:
+                break;
+            case CardType.recover:
+                break;
+            default:
+                break;
+        }
+        
+        activity[slot] = false;
+        Debug.Log("Deactivated a card");
+    }
+
+    public void removeCardFromHand(int slot)
     {
         if (!availability[slot]) return;
-        Image img = GameObject.Find("card" + slot.ToString()).GetComponent<Image>();
-        img.color = new Color(0, 0, 0, 1);
+        if (activity[slot]) deactivateCard(slot);
+        Image img = GameObject.Find("card" + (slot+1).ToString()).GetComponent<Image>();
+        Debug.Log("card" + slot.ToString());
+        img.sprite = placeholder.artwork;
+        
         img.GetComponent<Button_UI>().MouseOverOnceFunc = () => Tooltip.ShowTooltip_Static("Empty");
         img.GetComponent<Button_UI>().MouseOutOnceFunc = () => Tooltip.HideTooltip_Static();
+        
         availability[slot] = false;
+        activeTime[slot] = 0;
         if (currentDeckSize > 0) drawNewCard(slot);
+        Debug.Log("Removed a card");
     }
 
     public void shuffleDeck()
     {
-        
+        List<Cards> newList = new List<Cards>();
+        for (int i = 0; i < currentDeckSize; ++i)
+        {
+            newList.Add(deck[i]);
+        }
+        for (int i = 0; i < newList.Count/2; i++)
+        {
+            Cards temp = newList[i];
+            int randomIndex = Random.Range(i, newList.Count);
+            newList[i] = newList[randomIndex];
+            newList[randomIndex] = temp;
+        }
+        deck.Clear();
+        deck = new List<Cards>(newList);
     }
 
-    public void pointToGoal()
+    public void addToDeck(Cards other)
     {
+        deck[currentDeckSize++] = other;
+    }
 
+    public void timer()
+    {
+        for (int i = 0; i < maxHandSize; ++i)
+        {
+            GameObject.Find("card" + (i + 1).ToString()).GetComponent<Image>().fillAmount = 
+                Mathf.Clamp(1 - activeTime[i] / hand[i].duration, 0f, 1f);
+            if (availability[i])
+            {
+                if (activity[i])
+                activeTime[i] += Time.deltaTime;
+                if (activeTime[i] >= hand[i].duration) removeCardFromHand(i);
+            }
+        }
     }
 
     private void Update()
     {
+        
+        timer();
+        deckNumber.text = currentDeckSize.ToString() + "/" + maxDeckSize.ToString();
+        if (currentDeckSize == 0) mainChar.gameOver();
+
         if (Input.GetKeyDown(KeyCode.Z))
         {
-
+            useCard(0);
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-
+            useCard(1);
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {
-
+            useCard(2);
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
-
+            useCard(3);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-
+            useCard(4);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-
+            useCard(5);
         }
     }
 

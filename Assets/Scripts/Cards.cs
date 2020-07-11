@@ -9,7 +9,8 @@ public enum CardType
     attack,
     protect,
     shuffle,
-    recover
+    recover,
+    nullity
 }
 
 public enum Direction
@@ -20,6 +21,7 @@ public enum Direction
     right
 }
 
+[CreateAssetMenu(fileName = "New Card")]
 public class Cards : ScriptableObject
 {
     public string name;

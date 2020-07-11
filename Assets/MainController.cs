@@ -74,7 +74,7 @@ public class MainController : MonoBehaviour
     {
         move();
         attack();
-        protect();
+        jump();
         if (mainCamera)
             mainCamera.transform.position = new Vector3(t.position.x + cameraOffset, t.position.y, cameraPos.z);
         healthBar.fillAmount = currHealth / maxHealth;
@@ -121,13 +121,6 @@ public class MainController : MonoBehaviour
         attackPower = power;
     }
 
-    public void protect()
-    {
-        if (isProtecting)
-        {
-
-        }
-    }
     public void move()
     {
         if (isMovingLeft || isMovingRight)
@@ -158,11 +151,6 @@ public class MainController : MonoBehaviour
         }
     }
 
-    public void defend()
-    {
-
-    }
-
     public void jump()
     {
         if (isJumping && isGrounded)
@@ -180,6 +168,7 @@ public class MainController : MonoBehaviour
         }
         else
         {
+            if (attackCollider)
             attackCollider.enabled = false;
         }
         timePassed += Time.deltaTime;
@@ -187,9 +176,17 @@ public class MainController : MonoBehaviour
 
     public void takeDamage(float dmg)
     {
-        currHealth -= dmg;
-        if (currHealth >= maxHealth) currHealth = maxHealth;
-        if (currHealth <= 0) gameOver();
+        if (!isProtecting && dmg >= 0)
+        {
+            currHealth -= dmg;
+            if (currHealth >= maxHealth) currHealth = maxHealth;
+            if (currHealth <= 0) gameOver();
+        }
+        {
+            currHealth -= dmg;
+            if (currHealth >= maxHealth) currHealth = maxHealth;
+        }
+        
     }
 
     public void gameOver()

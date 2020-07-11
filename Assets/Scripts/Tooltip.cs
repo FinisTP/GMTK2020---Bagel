@@ -14,7 +14,8 @@ public class Tooltip : MonoBehaviour
 
     private void Awake()
     {
-        backgroundRectTransform = GameObject.Find("background").GetComponent<RectTransform>();
+        instance = this;
+        backgroundRectTransform = transform.Find("background").GetComponent<RectTransform>();
         tooltipText = GameObject.Find("text").GetComponent<Text>();
 
         showTooltip("Test tooltip text");
@@ -41,7 +42,7 @@ public class Tooltip : MonoBehaviour
 
     private void hideTooltip()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     public static void ShowTooltip_Static(string tooltipString)
