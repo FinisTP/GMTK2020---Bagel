@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eada04fabff557f4d9950b2d2536f6f1, type: 3}
-  m_Name: Defend 1
+  m_Name: Dash
   m_EditorClassIdentifier: 
   name: Shissou
   description: Performs a quick dash
   chatLog: quick dash
-  artwork: {fileID: 7634275255999491522, guid: b90d4a346700c8a4d9ff48a2fe7f21f6, type: 3}
-  cardType: 3
-  duration: 10
-  power: 25
-  direction: 0
+  artwork: {fileID: 2669092649629506414, guid: 19c7957d15a39514cadc5297bb9ac962, type: 3}
+  cardType: 7
+  duration: 2
+  power: 10
+  direction: 3

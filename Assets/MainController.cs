@@ -23,8 +23,11 @@ public class MainController : MonoBehaviour
     public float attackSpeed;
     public float attackDelay;
     public float protectPower;
-    public float maxHealth;
+    private int maxHealth = 3;
+    private int currHealth;
     public Direction hitDir;
+
+    public Sprite[] healthStages;
 
     public Collider2D attackTriggerLeft;
     public Collider2D attackTriggerRight;
@@ -50,7 +53,6 @@ public class MainController : MonoBehaviour
     float moveDirection = 0;
     bool isGrounded = false;
     float ampSpeed;
-    float currHealth;
     float attackPower;
     Vector3 cameraPos;
     Rigidbody2D r2d;
@@ -91,9 +93,9 @@ public class MainController : MonoBehaviour
         protect();
         recover();
         glide();
+        updateHealthBar();
         if (mainCamera)
             mainCamera.transform.position = new Vector3(t.position.x + cameraOffset, t.position.y, cameraPos.z);
-        healthBar.fillAmount = currHealth / maxHealth;
     }
 
     public void triggerMove(Direction direction, float power)
@@ -137,6 +139,11 @@ public class MainController : MonoBehaviour
         hitDir = dir;
         isAttacking = true;
         attackPower = power;
+    }
+
+    public void updateHealthBar() {
+        if (currHealth <= 3 && currHealth > 0)
+            healthBar.sprite = healthStages[currHealth-1];
     }
 
     public void move()
@@ -228,32 +235,32 @@ public class MainController : MonoBehaviour
             switch (hitDir)
             {
                 case Direction.left: // behind
+                    StartCoroutine(waitForAttack("punch"));
                     spawnPos = new Vector2(shootLeft.position.x, shootLeft.position.y);
                     go = Instantiate(bulletHori, spawnPos, Quaternion.identity);
                     if (facingRight)
                         go.GetComponent<Rigidbody2D>().velocity = Vector2.left * attackSpeed;
                     else go.GetComponent<Rigidbody2D>().velocity = Vector2.right * attackSpeed;
-                    StartCoroutine(waitForAttack("punch"));
                     break;
                 case Direction.right: // forward
+                    StartCoroutine(waitForAttack("punch"));
                     spawnPos = new Vector2(shootRight.position.x, shootRight.position.y);
                     go = Instantiate(bulletHori, spawnPos, Quaternion.identity);
                     if (facingRight)
                     go.GetComponent<Rigidbody2D>().velocity = Vector2.right * attackSpeed;
                     else go.GetComponent<Rigidbody2D>().velocity = Vector2.left * attackSpeed;
-                    StartCoroutine(waitForAttack("punch"));
                     break;
                 case Direction.up:
+                    StartCoroutine(waitForAttack("punchUp"));
                     spawnPos = new Vector2(shootUp.position.x, shootUp.position.y);
                     go = Instantiate(bulletVerti, spawnPos, Quaternion.identity);
                     go.GetComponent<Rigidbody2D>().velocity = Vector2.up * attackSpeed;
-                    StartCoroutine(waitForAttack("punchUp"));
                     break;
                 case Direction.down:
+                    StartCoroutine(waitForAttack("punchDown"));
                     spawnPos = new Vector2(shootDown.position.x, shootDown.position.y);
                     go = Instantiate(bulletVerti, spawnPos, Quaternion.identity);
                     go.GetComponent<Rigidbody2D>().velocity = Vector2.down * attackSpeed;
-                    StartCoroutine(waitForAttack("punchDown"));
                     break;
             }
             
@@ -277,17 +284,19 @@ public class MainController : MonoBehaviour
 
     public void takeDamage(float dmg)
     {
+        //Debug.Log("Took damage" + currHealth.ToString());
         if (!isProtecting && !isGliding && dmg >= 0)
         {
-            currHealth -= dmg;
+            currHealth -= 1;
             if (currHealth >= maxHealth) currHealth = maxHealth;
             StartCoroutine(inflict());
             if (currHealth <= 0) isGameOver = true;
-        }
+        } else
         {
-            currHealth -= dmg;
+            currHealth -= (int)dmg;
             if (currHealth >= maxHealth) currHealth = maxHealth;
         }
+        //Debug.Log("Took damage" + currHealth.ToString());
     }
 
     public void recover()
@@ -325,5 +334,19 @@ public class MainController : MonoBehaviour
 
         // Simple debug
         // Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(0, 0.23f, 0), isGrounded ? Color.green : Color.red);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Bullet":
+                takeDamage(1);
+                Destroy(collision.gameObject);
+                break;
+            case "Enemy":
+                takeDamage(1);
+                break;
+        }
     }
 }

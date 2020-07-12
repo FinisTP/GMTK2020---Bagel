@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 63041716723362934}
   m_Layer: 0
   m_Name: laserbeam_hori
-  m_TagString: Bullet
+  m_TagString: Bullet_Friendly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

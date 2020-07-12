@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Zengeki
   description: Performs a front attack
   chatLog: rightward strike
-  artwork: {fileID: 3106341853739790030, guid: b90d4a346700c8a4d9ff48a2fe7f21f6, type: 3}
+  artwork: {fileID: 5217064815801387910, guid: 31c43d209210b884c9b25eb38bfdcd03, type: 3}
   cardType: 2
   duration: 2
   power: 10

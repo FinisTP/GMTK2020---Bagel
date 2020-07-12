@@ -7,6 +7,9 @@ TagManager:
   - Bullet
   - Enemy
   - PunchRange
+  - Wall
+  - Bullet_friendltyy
+  - Bullet_Friendly
   layers:
   - Default
   - TransparentFX
