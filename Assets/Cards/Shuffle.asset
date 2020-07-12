@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Shaffaru
   description: Shuffles the deck
   chatLog: shuffling
-  artwork: {fileID: 882915015491475503, guid: c203b6ea6b4315b45b44e10db349b048, type: 3}
+  artwork: {fileID: 6036246249888723626, guid: cf0912d7652b9854fb070e389ea60a75, type: 3}
   cardType: 4
   duration: 2
   power: 25

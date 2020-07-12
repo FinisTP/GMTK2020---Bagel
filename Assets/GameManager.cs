@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public Text deckNumber;
     public Transform destination;
 
-    public Cards[] kindOfCards;
+    public Specification[] kindOfCards;
 
     public int maxDeckSize;
     public int maxHandSize;
@@ -45,19 +45,14 @@ public class GameManager : MonoBehaviour
         List<Cards> other = new List<Cards>();
         for (int i = 0; i < kindOfCards.Length; ++i)
         {
-            switch (kindOfCards[i].cardType)
+            for (int k = 0; k < kindOfCards[i].amount; ++k)
             {
-                case CardType.move:
-                    movement.Add(kindOfCards[i]);
-                    break;
-                case CardType.jump:
-                    jump.Add(kindOfCards[i]);
-                    break;
-                default:
-                    other.Add(kindOfCards[i]);
-                    break;
+                deck.Add(kindOfCards[i].card);
+                currentDeckSize++;
             }
         }
+        maxDeckSize = currentDeckSize;
+        /*
         while (deck.Count < maxDeckSize / 2)
         {
             int randMove = Random.Range(0, movement.Count);
@@ -76,9 +71,12 @@ public class GameManager : MonoBehaviour
             deck.Add(other[randOther]);
             currentDeckSize++;
         }
+        */
         availability = new List<bool>();
         activeTime = new List<float>();
         activity = new List<bool>();
+        shuffleDeck();
+        
         for (int i = 0; i < maxHandSize; ++i)
         {
             availability.Add(false);
@@ -86,16 +84,18 @@ public class GameManager : MonoBehaviour
             activity.Add(false);
             hand.Add(placeholder);
         }
-        shuffleDeck();
+        
         for (int i = 0; i < maxHandSize; ++i) drawNewCard(i);
+        
         
     }
 
     public void drawNewCard(int slot)
     {
         if (availability[slot] || currentDeckSize <= 0) return;
-        Cards card = deck[currentDeckSize - 1];
-        deck.Remove(deck[currentDeckSize - 1]);
+        Cards card = deck[0];
+        for (int i = 0; i < currentDeckSize; ++i) Debug.Log(i.ToString() + deck[i].name);
+        deck.Remove(deck[0]);
         hand[slot] = card;
         currentDeckSize--;
         //Debug.Log(currentDeckSize);
@@ -118,6 +118,10 @@ public class GameManager : MonoBehaviour
             {
                 case CardType.attack:
                     mainChar.triggerAttack(hand[slot].direction, hand[slot].power);
+                    for (int i = 0; i < maxHandSize; ++i)
+                    {
+
+                    }
                     break;
                 case CardType.jump:
                     mainChar.triggerJump(hand[slot].power);
@@ -132,7 +136,7 @@ public class GameManager : MonoBehaviour
                     shuffleDeck();
                     break;
                 case CardType.recover:
-                    mainChar.takeDamage(-hand[slot].power);
+                    mainChar.isRecovering = true;
                     break;
                 default:
                     break;
@@ -176,7 +180,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
         GameObject.Find("frame" + (slot + 1).ToString()).GetComponent<Animation>().Play("frameBackAnim");
-        LogSystem.SendMessageToChat_Static("Negated '" + hand[slot].name + "' - stopped" + hand[slot].chatLog + ".");
+        LogSystem.SendMessageToChat_Static("Negated '" + hand[slot].name + "' - stopped " + hand[slot].chatLog + ".");
 
         activity[slot] = false;
         //Debug.Log("Deactivated a card");
@@ -201,20 +205,25 @@ public class GameManager : MonoBehaviour
 
     public void shuffleDeck()
     {
+        //Random.seed = System.DateTime.Now.Millisecond;
+        /*
         List<Cards> newList = new List<Cards>();
         for (int i = 0; i < currentDeckSize; ++i)
         {
             newList.Add(deck[i]);
         }
-        for (int i = 0; i < newList.Count/2; i++)
+        */
+        System.Random random = new System.Random();
+
+        for (int i = 0; i < deck.Count; i++)
         {
-            Cards temp = newList[i];
-            int randomIndex = Random.Range(i, newList.Count);
-            newList[i] = newList[randomIndex];
-            newList[randomIndex] = temp;
+            Cards temp = deck[i];
+            int randomIndex = random.Next(i, deck.Count);
+            //Debug.Log(randomIndex);
+            deck[i] = deck[randomIndex];
+            deck[randomIndex] = temp;
+            Debug.Log(deck[i].name + " is now at the " + randomIndex.ToString());
         }
-        deck.Clear();
-        deck = new List<Cards>(newList);
         LogSystem.SendMessageToChat_Static("The deck has been shuffled.");
     }
 

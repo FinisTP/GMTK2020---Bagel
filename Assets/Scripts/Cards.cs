@@ -22,6 +22,13 @@ public enum Direction
     right
 }
 
+[System.Serializable]
+public class Specification
+{
+    public Cards card;
+    public int amount;
+}
+
 [CreateAssetMenu(fileName = "New Card")]
 public class Cards : ScriptableObject
 {
@@ -34,5 +41,6 @@ public class Cards : ScriptableObject
     public float duration;
     public int power;
     public Direction direction;
+    public int amount;
 
 }
