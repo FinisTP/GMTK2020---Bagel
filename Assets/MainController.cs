@@ -48,6 +48,7 @@ public class MainController : MonoBehaviour
     Rigidbody2D r2d;
     Collider2D mainCollider;
     Collider2D attackCollider;
+    Animator anim;
     // Check every collider except Player and Ignore Raycast
     LayerMask layerMask = ~(1 << 2 | 1 << 8);
     Transform t;
@@ -60,6 +61,7 @@ public class MainController : MonoBehaviour
         ampSpeed = 1;
         r2d = GetComponent<Rigidbody2D>();
         mainCollider = GetComponent<Collider2D>();
+        anim = GetComponent<Animator>();
         r2d.freezeRotation = true;
         r2d.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         r2d.gravityScale = gravityScale;
@@ -144,29 +146,42 @@ public class MainController : MonoBehaviour
             if (moveDirection > 0 && !facingRight)
             {
                 facingRight = true;
+                //anim.SetBool("playerWalk", true);
                 t.localScale = new Vector3(Mathf.Abs(t.localScale.x), t.localScale.y, transform.localScale.z);
             }
             if (moveDirection < 0 && facingRight)
             {
                 facingRight = false;
+                
                 t.localScale = new Vector3(-Mathf.Abs(t.localScale.x), t.localScale.y, t.localScale.z);
             }
+            anim.SetBool("playerWalk", true);
+            anim.SetFloat("OldHorizontal", moveDirection);
+            gameObject.GetComponent<SpriteRenderer>().sortingOrder = (int)(-transform.position.y * 10 + 100);
         }
+        else
+        {
+            anim.SetBool("playerWalk", false);
+        }
+        anim.SetFloat("Horizontal", moveDirection * maxSpeed);
     }
 
     public void jump()
     {
         if (isJumping && isGrounded)
         {
+            anim.SetTrigger("playerJump");
             r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
         }
     }
 
     public void attack()
     {
+        
         if (isAttacking && timePassed >= attackDelay)
         {
             attackCollider.enabled = true;
+            anim.SetTrigger("punch");
             timePassed = 0;
         }
         else
@@ -205,11 +220,13 @@ public class MainController : MonoBehaviour
         Vector3 groundCheckPos = colliderBounds.min + new Vector3(colliderBounds.size.x * 0.5f, 0.1f, 0);
         // Check if player is grounded
         isGrounded = Physics2D.OverlapCircle(groundCheckPos, 0.23f, layerMask);
+        if (!isGrounded) anim.SetBool("onGround", false);
+        else anim.SetBool("onGround", true);
 
         // Apply movement velocity
         r2d.velocity = new Vector2((moveDirection) * maxSpeed * ampSpeed, r2d.velocity.y);
 
         // Simple debug
-        Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(0, 0.23f, 0), isGrounded ? Color.green : Color.red);
+        // Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(0, 0.23f, 0), isGrounded ? Color.green : Color.red);
     }
 }

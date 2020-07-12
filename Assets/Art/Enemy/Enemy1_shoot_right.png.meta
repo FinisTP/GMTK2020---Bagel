@@ -1,25 +1,16 @@
 fileFormatVersion: 2
-guid: 9f8407be934b0ba47a5815d2896aa907
+guid: 077c56a3ccddd854ca17371cc3e46419
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5359521644557245044
-    second: Main_walk_left_0
+      213: 5170212041373200500
+    second: Enemy1_shoot_right_0
   - first:
-      213: 5411338136133536413
-    second: Main_walk_left_1
+      213: 3304635261662334306
+    second: Enemy1_shoot_right_1
   - first:
-      213: -7870466627915566216
-    second: Main_walk_left_2
-  - first:
-      213: 63119191891522487
-    second: Main_walk_left_3
-  - first:
-      213: -8668563030610287002
-    second: Main_walk_left_4
-  - first:
-      213: -4886621501967704933
-    second: Main_walk_left_5
+      213: 3868659579825303284
+    second: Enemy1_shoot_right_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -50,7 +41,7 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
+    aniso: 1
     mipBias: -100
     wrapU: 1
     wrapV: 1
@@ -105,13 +96,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Main_walk_left_0
+      name: Enemy1_shoot_right_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
-        height: 64
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +110,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c85e522d5772f95b0800000000000000
-      internalID: -5359521644557245044
+      spriteID: 4703f7b657840c740800000000000000
+      internalID: 5170212041373200500
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Main_walk_left_1
+      name: Enemy1_shoot_right_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
-        height: 64
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9a83c34d5fe81b40800000000000000
-      internalID: 5411338136133536413
+      spriteID: 26d0d93034c6cdd20800000000000000
+      internalID: 3304635261662334306
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Main_walk_left_2
+      name: Enemy1_shoot_right_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
-        height: 64
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,71 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 873b68a2d4c76c290800000000000000
-      internalID: -7870466627915566216
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Main_walk_left_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7b33433129e30e000800000000000000
-      internalID: 63119191891522487
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Main_walk_left_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 666e3670ad313b780800000000000000
-      internalID: -8668563030610287002
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Main_walk_left_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9cdd6762ab3f2cb0800000000000000
-      internalID: -4886621501967704933
+      spriteID: 4fe266c046d30b530800000000000000
+      internalID: 3868659579825303284
       vertices: []
       indices: 
       edges: []
@@ -233,7 +161,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 1400f672e8b837a4e9c110a1159fb0ba
+    spriteID: d4ac15df43f21ba4ba4e8e4b45915cc9
     internalID: 0
     vertices: []
     indices: 
