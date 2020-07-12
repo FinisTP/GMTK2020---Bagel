@@ -17,6 +17,7 @@ MonoBehaviour:
   chatLog: rightward strike
   artwork: {fileID: 5217064815801387910, guid: 31c43d209210b884c9b25eb38bfdcd03, type: 3}
   cardType: 2
-  duration: 2
+  duration: 0.1
   power: 10
   direction: 3
+  amount: 0

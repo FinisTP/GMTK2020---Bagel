@@ -50,6 +50,7 @@ public class MainController : MonoBehaviour
     
     bool facingRight = true;
     float timePassed = 0;
+    float oldMaxSpeed;
     float moveDirection = 0;
     bool isGrounded = false;
     float ampSpeed;
@@ -78,6 +79,7 @@ public class MainController : MonoBehaviour
         facingRight = t.localScale.x > 0;
         gameObject.layer = 8;
         currHealth = maxHealth;
+        mainCamera = GameObject.Find("Camera").GetComponent<Camera>();
 
         if (mainCamera)
             cameraPos = mainCamera.transform.position;
@@ -115,7 +117,7 @@ public class MainController : MonoBehaviour
     {
         protectPower = power;
         isProtecting = true;
-        anim.SetTrigger("protect");
+        //anim.SetBool("protect", true);
     }
 
     public void triggerAttack(Direction dir, float power)
@@ -139,6 +141,12 @@ public class MainController : MonoBehaviour
         hitDir = dir;
         isAttacking = true;
         attackPower = power;
+    }
+
+    public void triggerGlide(float power)
+    {
+        dashSpeed = power;
+        isGliding = true;
     }
 
     public void updateHealthBar() {
@@ -204,13 +212,29 @@ public class MainController : MonoBehaviour
         if (isGliding)
         {
             r2d.gravityScale = 0;
+            oldMaxSpeed = maxSpeed;
+            maxSpeed = dashSpeed;
             anim.SetBool("dash", true);
+            if (!isMovingLeft && !isMovingRight)
+            {
+                StartCoroutine(waitForDash());
+            }
         }
         else
         {
             r2d.gravityScale = 1;
             anim.SetBool("dash", false);
         }        
+    }
+
+    IEnumerator waitForDash()
+    {
+        if (facingRight) triggerMove(Direction.right, dashSpeed);
+        else triggerMove(Direction.left, dashSpeed);
+        yield return new WaitForSeconds(0.1f);
+        isMovingLeft = isMovingRight = false;
+        maxSpeed = oldMaxSpeed;
+        //GameObject.Find("GameManager").GetComponent<GameManager>().pauseCards(CardType.move);
     }
 
     public void protect()
@@ -228,7 +252,7 @@ public class MainController : MonoBehaviour
     public void attack()
     {
         
-        if (isAttacking && timePassed >= attackDelay)
+        if (isAttacking)
         {
             Debug.Log("Aattacking");
             attackCollider.enabled = true;
@@ -265,7 +289,7 @@ public class MainController : MonoBehaviour
                     break;
             }
             
-            timePassed = 0;
+            //timePassed = 0;
         }
         else
         {
@@ -273,13 +297,13 @@ public class MainController : MonoBehaviour
             attackCollider.enabled = false;
             
         }
-        timePassed += Time.deltaTime;
+        //timePassed += Time.deltaTime;
     }
 
     IEnumerator waitForAttack(string punchDir)
     {
         anim.SetBool(punchDir, true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         anim.SetBool(punchDir, false);
     }
 
@@ -292,7 +316,7 @@ public class MainController : MonoBehaviour
             if (currHealth >= maxHealth) currHealth = maxHealth;
             StartCoroutine(inflict());
             if (currHealth <= 0) isGameOver = true;
-        } else
+        } else if (dmg < 0)
         {
             currHealth -= (int)dmg;
             if (currHealth >= maxHealth) currHealth = maxHealth;
@@ -302,7 +326,11 @@ public class MainController : MonoBehaviour
 
     public void recover()
     {
-        if (isRecovering) anim.SetBool("recover", true);
+        if (isRecovering)
+        {
+            anim.SetBool("recover", true);
+            currHealth = maxHealth;
+        }
         else anim.SetBool("recover", false);
     }
 

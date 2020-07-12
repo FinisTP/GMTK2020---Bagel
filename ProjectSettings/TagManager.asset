@@ -10,6 +10,7 @@ TagManager:
   - Wall
   - Bullet_friendltyy
   - Bullet_Friendly
+  - Deadzone
   layers:
   - Default
   - TransparentFX

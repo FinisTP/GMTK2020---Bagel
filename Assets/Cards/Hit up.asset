@@ -17,6 +17,7 @@ MonoBehaviour:
   chatLog: upward strike
   artwork: {fileID: -402297778233834831, guid: 31c43d209210b884c9b25eb38bfdcd03, type: 3}
   cardType: 2
-  duration: 2
+  duration: 0.1
   power: 10
   direction: 0
+  amount: 0

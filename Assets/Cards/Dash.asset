@@ -17,6 +17,7 @@ MonoBehaviour:
   chatLog: quick dash
   artwork: {fileID: 2669092649629506414, guid: 19c7957d15a39514cadc5297bb9ac962, type: 3}
   cardType: 7
-  duration: 2
+  duration: 0.5
   power: 10
   direction: 3
+  amount: 0

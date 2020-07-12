@@ -16,7 +16,8 @@ MonoBehaviour:
   description: Recovers 25% HP
   chatLog: recharging
   artwork: {fileID: 2504954188058099215, guid: cf0912d7652b9854fb070e389ea60a75, type: 3}
-  cardType: 0
-  duration: 2
+  cardType: 5
+  duration: 1
   power: 25
   direction: 0
+  amount: 0
