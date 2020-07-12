@@ -114,14 +114,11 @@ public class GameManager : MonoBehaviour
         if (!availability[slot]) return;
         else if (!activity[slot] && activeTime[slot] <= hand[slot].duration)
         {
+            pauseCards(hand[slot].cardType);
             switch (hand[slot].cardType)
             {
-                case CardType.attack:
+                case CardType.attack:   
                     mainChar.triggerAttack(hand[slot].direction, hand[slot].power);
-                    for (int i = 0; i < maxHandSize; ++i)
-                    {
-
-                    }
                     break;
                 case CardType.jump:
                     mainChar.triggerJump(hand[slot].power);
@@ -134,6 +131,11 @@ public class GameManager : MonoBehaviour
                     break;
                 case CardType.shuffle:
                     shuffleDeck();
+                    break;
+                case CardType.dash:
+                    pauseCards(CardType.jump);
+                    pauseCards(CardType.move);
+                    mainChar.triggerGlide(hand[slot].power);
                     break;
                 case CardType.recover:
                     mainChar.isRecovering = true;
@@ -153,11 +155,18 @@ public class GameManager : MonoBehaviour
 
     public void pauseCards(CardType cardType)
     {
-
+        for (int i = 0; i < maxHandSize; ++i)
+        {
+            if (hand[i].cardType == cardType)
+            {
+                deactivateCard(i);
+            }
+        }
     }
 
     public void deactivateCard(int slot)
     {
+        if (!activity[slot]) return;
         switch (hand[slot].cardType)
         {
             case CardType.attack:
@@ -172,9 +181,13 @@ public class GameManager : MonoBehaviour
             case CardType.protect:
                 mainChar.isProtecting = false;
                 break;
+            case CardType.dash:
+                mainChar.isGliding = false;
+                break;
             case CardType.shuffle:
                 break;
             case CardType.recover:
+                mainChar.isRecovering = false;
                 break;
             default:
                 break;

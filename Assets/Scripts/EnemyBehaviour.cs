@@ -119,6 +119,16 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("Bullet_Friendly"))
+        {
+            StartCoroutine(animationBeforeDead());
+        }
+    }
+
+    IEnumerator animationBeforeDead()
+    {
+        GetComponent<Animator>().SetTrigger("dead");
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 }

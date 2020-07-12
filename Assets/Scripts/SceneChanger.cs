@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour
 {
 
-    private List<string> sceneHistory = new List<string>();  //running history of scenes
+    public List<string> sceneHistory = new List<string>();  //running history of scenes
                                                              //The last string in the list is always the current scene running
 
     void Start()
@@ -40,6 +40,10 @@ public class SceneChanger : MonoBehaviour
 
     public void LoadNextScene()
     {
+        string sceneName = SceneManager.GetActiveScene().name;
+        int num = (int) char.GetNumericValue(sceneName[5]);
+        sceneName = "Level" + (num+1).ToString();
+        sceneHistory.Add(sceneName);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public void QuitGame()

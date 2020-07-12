@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 191987705441139610}
   - component: {fileID: 191987705441139607}
   - component: {fileID: 191987705441139601}
+  - component: {fileID: 971492886}
   m_Layer: 0
   m_Name: EnemyBot
   m_TagString: Enemy
@@ -150,7 +151,7 @@ MonoBehaviour:
     type: 3}
   bulletHolder: {fileID: 191987707038814954}
   shootSpeed: 5
-  delayShoot: 3
+  delayShoot: 10
   canAttack: 1
   movingPositions: []
   waitTime: 2
@@ -174,6 +175,22 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   timeStop: 3
   speed: 0.01
+--- !u!111 &971492886
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191987705441139609}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 4d928b27e46e4944080ec3a1e8b5fe0b, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &191987705484218198
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,15 +404,15 @@ PolygonCollider2D:
     - - {x: -0.75, y: 1.25}
       - {x: -0.75, y: 1}
       - {x: -0.3125, y: 0.125}
-      - {x: 0.27640724, y: -5.7021456}
-      - {x: 4.043583, y: -5.7096043}
-      - {x: 6.8894887, y: -4.7747765}
-      - {x: 8.570583, y: -3.3278227}
-      - {x: 9.482069, y: -2.0344772}
-      - {x: 9.708933, y: -0.8983706}
-      - {x: 9.549905, y: 2.1811388}
-      - {x: 9.237869, y: 4.656646}
-      - {x: 8.186568, y: 5.440152}
-      - {x: 7.134753, y: 5.188761}
+      - {x: 2.441555, y: -3.0067563}
+      - {x: 4.131955, y: -4.8258705}
+      - {x: 4.5917797, y: -4.8189635}
+      - {x: 5.1240215, y: -4.56505}
+      - {x: 5.4610777, y: -3.846132}
+      - {x: 6.0414333, y: -2.4007194}
+      - {x: 6.324276, y: 0.9880979}
+      - {x: 5.835493, y: 3.021737}
+      - {x: 4.9609385, y: 3.8052444}
+      - {x: 4.2184315, y: 3.9073467}
       - {x: 2.2670884, y: 3.4888716}
       - {x: -0.21522236, y: 1.958663}
