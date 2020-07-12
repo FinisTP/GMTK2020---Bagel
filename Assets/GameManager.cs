@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
                     mainChar.triggerMove(hand[slot].direction, hand[slot].power);
                     break;
                 case CardType.protect:
-                    mainChar.isProtecting = true;
+                    mainChar.triggerProtect(hand[slot].power);
                     break;
                 case CardType.shuffle:
                     shuffleDeck();
@@ -137,6 +137,7 @@ public class GameManager : MonoBehaviour
                 default:
                     break;
             }
+            GameObject.Find("frame" + (slot + 1).ToString()).GetComponent<Animation>().Play("frameAnim");
             LogSystem.SendMessageToChat_Static("Used '" + hand[slot].name + "' - activated " + hand[slot].chatLog + ".");
             activity[slot] = true;
         }
@@ -144,6 +145,11 @@ public class GameManager : MonoBehaviour
         {
             deactivateCard(slot);
         }
+    }
+
+    public void pauseCards(CardType cardType)
+    {
+
     }
 
     public void deactivateCard(int slot)
@@ -169,7 +175,7 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-
+        GameObject.Find("frame" + (slot + 1).ToString()).GetComponent<Animation>().Play("frameBackAnim");
         LogSystem.SendMessageToChat_Static("Negated '" + hand[slot].name + "' - stopped" + hand[slot].chatLog + ".");
 
         activity[slot] = false;

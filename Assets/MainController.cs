@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class MainController : MonoBehaviour
@@ -17,16 +18,23 @@ public class MainController : MonoBehaviour
     public float cameraOffset = 2.5f;
     public float dashSpeed = 2f;
     public Camera mainCamera;
-    public GameObject bullet;
+    public GameObject bulletHori;
+    public GameObject bulletVerti;
     public float attackSpeed;
     public float attackDelay;
     public float protectPower;
     public float maxHealth;
+    public Direction hitDir;
 
     public Collider2D attackTriggerLeft;
     public Collider2D attackTriggerRight;
     public Collider2D attackTriggerUp;
     public Collider2D attackTriggerDown;
+
+    public Transform shootRight;
+    public Transform shootUp;
+    public Transform shootDown;
+    public Transform shootLeft;
 
     public bool isJumping;
     public bool isMovingLeft;
@@ -34,8 +42,8 @@ public class MainController : MonoBehaviour
     public bool isAttacking;
     public bool isRecovering;
     public bool isProtecting;
+    public bool isGliding;
     public bool isGameOver;
-
     
     bool facingRight = true;
     float timePassed = 0;
@@ -80,6 +88,9 @@ public class MainController : MonoBehaviour
         attack();
         jump();
         gameOver();
+        protect();
+        recover();
+        glide();
         if (mainCamera)
             mainCamera.transform.position = new Vector3(t.position.x + cameraOffset, t.position.y, cameraPos.z);
         healthBar.fillAmount = currHealth / maxHealth;
@@ -102,6 +113,7 @@ public class MainController : MonoBehaviour
     {
         protectPower = power;
         isProtecting = true;
+        anim.SetTrigger("protect");
     }
 
     public void triggerAttack(Direction dir, float power)
@@ -122,6 +134,7 @@ public class MainController : MonoBehaviour
                 break;
             default: break;
         }
+        hitDir = dir;
         isAttacking = true;
         attackPower = power;
     }
@@ -170,8 +183,38 @@ public class MainController : MonoBehaviour
     {
         if (isJumping && isGrounded)
         {
-            anim.SetTrigger("playerJump");
+            anim.SetBool("playerJump", true);
             r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
+        }
+        else if (!isJumping && isGrounded)
+        {
+            anim.SetBool("playerJump", false);
+        }
+    }
+
+    public void glide()
+    {
+        if (isGliding)
+        {
+            r2d.gravityScale = 0;
+            anim.SetBool("dash", true);
+        }
+        else
+        {
+            r2d.gravityScale = 1;
+            anim.SetBool("dash", false);
+        }        
+    }
+
+    public void protect()
+    {
+        if (isProtecting)
+        {
+            anim.SetBool("protect", true);
+        }
+        else
+        {
+            anim.SetBool("protect", false);
         }
     }
 
@@ -181,30 +224,84 @@ public class MainController : MonoBehaviour
         if (isAttacking && timePassed >= attackDelay)
         {
             attackCollider.enabled = true;
-            anim.SetTrigger("punch");
+            Vector2 spawnPos; GameObject go;
+            switch (hitDir)
+            {
+                case Direction.left: // behind
+                    spawnPos = new Vector2(shootLeft.position.x, shootLeft.position.y);
+                    go = Instantiate(bulletHori, spawnPos, Quaternion.identity);
+                    if (facingRight)
+                        go.GetComponent<Rigidbody2D>().velocity = Vector2.left * attackSpeed;
+                    else go.GetComponent<Rigidbody2D>().velocity = Vector2.right * attackSpeed;
+                    StartCoroutine(waitForAttack("punch"));
+                    break;
+                case Direction.right: // forward
+                    spawnPos = new Vector2(shootRight.position.x, shootRight.position.y);
+                    go = Instantiate(bulletHori, spawnPos, Quaternion.identity);
+                    if (facingRight)
+                    go.GetComponent<Rigidbody2D>().velocity = Vector2.right * attackSpeed;
+                    else go.GetComponent<Rigidbody2D>().velocity = Vector2.left * attackSpeed;
+                    StartCoroutine(waitForAttack("punch"));
+                    break;
+                case Direction.up:
+                    spawnPos = new Vector2(shootUp.position.x, shootUp.position.y);
+                    go = Instantiate(bulletVerti, spawnPos, Quaternion.identity);
+                    go.GetComponent<Rigidbody2D>().velocity = Vector2.up * attackSpeed;
+                    StartCoroutine(waitForAttack("punchUp"));
+                    break;
+                case Direction.down:
+                    spawnPos = new Vector2(shootDown.position.x, shootDown.position.y);
+                    go = Instantiate(bulletVerti, spawnPos, Quaternion.identity);
+                    go.GetComponent<Rigidbody2D>().velocity = Vector2.down * attackSpeed;
+                    StartCoroutine(waitForAttack("punchDown"));
+                    break;
+            }
+            
             timePassed = 0;
         }
         else
         {
             if (attackCollider)
             attackCollider.enabled = false;
+            
         }
         timePassed += Time.deltaTime;
     }
 
+    IEnumerator waitForAttack(string punchDir)
+    {
+        anim.SetBool(punchDir, true);
+        yield return new WaitForSeconds(2f);
+        anim.SetBool(punchDir, false);
+    }
+
     public void takeDamage(float dmg)
     {
-        if (!isProtecting && dmg >= 0)
+        if (!isProtecting && !isGliding && dmg >= 0)
         {
             currHealth -= dmg;
             if (currHealth >= maxHealth) currHealth = maxHealth;
+            StartCoroutine(inflict());
             if (currHealth <= 0) isGameOver = true;
         }
         {
             currHealth -= dmg;
             if (currHealth >= maxHealth) currHealth = maxHealth;
         }
-        
+    }
+
+    public void recover()
+    {
+        if (isRecovering) anim.SetBool("recover", true);
+        else anim.SetBool("recover", false);
+    }
+
+    IEnumerator inflict()
+    {
+        anim.SetBool("takeDamage", true);
+        yield return new WaitForSeconds(1f);
+        anim.SetBool("takeDamage", false);
+        yield return null;
     }
 
     public void gameOver()
