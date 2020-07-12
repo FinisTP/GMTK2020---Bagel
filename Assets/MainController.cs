@@ -230,6 +230,7 @@ public class MainController : MonoBehaviour
         
         if (isAttacking && timePassed >= attackDelay)
         {
+            Debug.Log("Aattacking");
             attackCollider.enabled = true;
             Vector2 spawnPos; GameObject go;
             switch (hitDir)

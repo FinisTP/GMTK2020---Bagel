@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &509193393399375404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 509193393399375406}
+  - component: {fileID: 509193393399375407}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &509193393399375406
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509193393399375404}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -10.600001, y: 1.6300001, z: -0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.50000006}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &509193393399375407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509193393399375404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711baa7941c30834086a5b67e67d7a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainChar: {fileID: 0}
+  deckImage: {fileID: 0}
+  placeholder: {fileID: 11400000, guid: 8ee7c9ddf7320b946877ebd41051bef7, type: 2}
+  deckNumber: {fileID: 0}
+  destination: {fileID: 0}
+  kindOfCards:
+  - card: {fileID: 11400000, guid: b8971b24ba462344b83c9531573c7b16, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 6f08e1688fa4b6842872b19e9109a039, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 11983860466ef9e4c825156cd71f979a, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: ea6f1e6251288f64580608c99bd1af81, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 62a80d992d8340b4b836da0215579d42, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 4a6c235aea3f3eb45a22fabb45338a6b, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 1c0ce966704ecdf43aae5254210632c5, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: ad6fca94b98ca6f47a38db8e914b29a6, type: 2}
+    amount: 10
+  - card: {fileID: 11400000, guid: 837d3c555dfbbca4f97f185ca8db6381, type: 2}
+    amount: 0
+  - card: {fileID: 11400000, guid: 103b14a950c0081499d6708d7df530c1, type: 2}
+    amount: 10
+  - card: {fileID: 11400000, guid: 62fc074eec4b39346b5f29c48c4946d7, type: 2}
+    amount: 0
+  maxDeckSize: 10
+  maxHandSize: 5
