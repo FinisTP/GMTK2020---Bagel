@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Migi
   description: Slowly moves right for 5 seconds
   chatLog: advancing right
-  artwork: {fileID: 6003203737844755297, guid: c203b6ea6b4315b45b44e10db349b048, type: 3}
+  artwork: {fileID: 7145198348311737387, guid: b90d4a346700c8a4d9ff48a2fe7f21f6, type: 3}
   cardType: 0
   duration: 5
   power: 3

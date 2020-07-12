@@ -10,7 +10,8 @@ public enum CardType
     protect,
     shuffle,
     recover,
-    nullity
+    nullity,
+    dash
 }
 
 public enum Direction

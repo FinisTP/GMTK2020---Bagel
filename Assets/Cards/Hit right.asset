@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eada04fabff557f4d9950b2d2536f6f1, type: 3}
   m_Name: Hit right
   m_EditorClassIdentifier: 
-  name: Houkougeki
-  description: Performs an rightward attack
+  name: Zengeki
+  description: Performs a front attack
   chatLog: rightward strike
-  artwork: {fileID: 4093304721602269458, guid: c203b6ea6b4315b45b44e10db349b048, type: 3}
+  artwork: {fileID: 5217064815801387910, guid: 31c43d209210b884c9b25eb38bfdcd03, type: 3}
   cardType: 2
   duration: 2
   power: 10

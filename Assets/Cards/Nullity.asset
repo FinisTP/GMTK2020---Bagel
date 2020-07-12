@@ -15,8 +15,7 @@ MonoBehaviour:
   name: Buji
   description: An empty card
   chatLog: 
-  artwork: {fileID: -7732569738864306783, guid: ce3a064be3244ec4eb7260b42c6656be,
-    type: 3}
+  artwork: {fileID: 4072447606386155404, guid: b90d4a346700c8a4d9ff48a2fe7f21f6, type: 3}
   cardType: 6
   duration: 2
   power: 25
